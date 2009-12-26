@@ -4,6 +4,8 @@
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsScene>
 
+#include "utils.h"
+
 Room::Room()
 {
     setFlag(ItemIsMovable);
@@ -18,17 +20,23 @@ Room::~Room()
 
 QRectF Room::boundingRect() const
 {
-    qreal adjust = 2;
+    /*const qreal adjust = 100;
     return QRectF(-10 - adjust, -10 - adjust,
                   20 + adjust, 20 + adjust);
+                  */
+    qreal a = 2;
+    return QRectF(-10 -a, -10 -a , 20 + 2*a, 20 + 2*a);
 }
 
 void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
-    //painter->setPen(Qt::NoPen);
-    painter->setPen(Qt::yellow);
+    painter->setPen(Qt::lightGray);
+    painter->setBrush(Qt::lightGray);
+    painter->drawRect(-8, -8, 20, 20);
+    painter->setPen(Qt::darkGreen);
     painter->setBrush(Qt::darkGray);
     painter->drawRect(-10, -10, 20, 20);
+
 
     /*
     QRadialGradient gradient(-3, -3, 10);
@@ -53,8 +61,8 @@ QVariant Room::itemChange(GraphicsItemChange change, const QVariant &value)
         // value is the new position.
         QPointF newPos = value.toPointF();
         QRectF rect = scene()->sceneRect();
-        newPos.setX(20 * (int(newPos.x()) / 20));
-        newPos.setY(20 * (int(newPos.y()) / 20));
+        newPos.setX(roundBy(newPos.x(), 40));
+        newPos.setY(roundBy(newPos.y(), 40));
         //newPos.setX(0);
         /*
         if (!rect.contains(newPos)) {

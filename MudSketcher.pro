@@ -6,10 +6,12 @@ TEMPLATE = app
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/room.cpp \
-    src/mapwidget.cpp
+    src/mapwidget.cpp \
+    src/utils.cpp
 HEADERS += src/mainwindow.h \
     src/room.h \
-    src/mapwidget.h
+    src/mapwidget.h \
+    src/utils.h
 FORMS += src/ui/mainwindow.ui
 OBJECTS_DIR = tmp/obj
 MOC_DIR = tmp/moc

@@ -11,9 +11,15 @@ public:
 
     void drawBackground ( QPainter * painter, const QRectF & rect );
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent );
-signals:
+    void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+
+signals:   
 
 public slots:
+
+private:
+    bool m_fFirstMove;
 
 };
 
