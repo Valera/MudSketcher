@@ -45,7 +45,7 @@ void MapWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     if(mouseGrabberItem() && m_fFirstMove){
         QList<QGraphicsItem *> exits = collidingItems(mouseGrabberItem());
         foreach(QGraphicsItem *i, exits){
-            if(i->data(0) == "Arrow"){
+            if(i->type() == Arrow::Type){
                 removeItem(i);
                 delete i;
             }

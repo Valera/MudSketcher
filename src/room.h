@@ -14,6 +14,9 @@ public:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+    enum { Type = UserType + 1 };
+    int type() const { return Type; }
 };
 
 #endif // ROOM_H

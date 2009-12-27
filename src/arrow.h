@@ -17,6 +17,9 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *);
 
+    enum { Type = UserType + 2 };
+    int type() const { return Type; }
+
 private:
     QPen m_hoverPen;
     QPen m_stdPen;
