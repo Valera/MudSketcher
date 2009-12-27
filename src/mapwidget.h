@@ -3,6 +3,8 @@
 
 #include <QGraphicsScene>
 
+#include "arrow.h"
+
 class MapWidget : public QGraphicsScene
 {
 Q_OBJECT
@@ -14,6 +16,7 @@ public:
     void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
+    Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
 signals:   
 
 public slots:

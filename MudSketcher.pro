@@ -7,11 +7,13 @@ SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/room.cpp \
     src/mapwidget.cpp \
-    src/utils.cpp
+    src/utils.cpp \
+    src/arrow.cpp
 HEADERS += src/mainwindow.h \
     src/room.h \
     src/mapwidget.h \
-    src/utils.h
+    src/utils.h \
+    src/arrow.h
 FORMS += src/ui/mainwindow.ui
 OBJECTS_DIR = tmp/obj
 MOC_DIR = tmp/moc

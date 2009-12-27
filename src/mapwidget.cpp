@@ -18,6 +18,7 @@ const int NCELLS = 10;
 
 void MapWidget::drawBackground ( QPainter * painter, const QRectF & rect )
 {
+    Q_UNUSED(rect);
     QPen pen(Qt::lightGray);
     pen.setCosmetic(true);
     pen.setWidth(0);
@@ -64,14 +65,22 @@ void MapWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     qDebug() << mouseEvent->scenePos().x() << mouseEvent->scenePos().y();
     qDebug() << x << y;
     if(itemAt(QPointF(x, y - step)))
-        addLine(x, y, x, y - step)->setData(0, "Arrow");
+        addArrow(x, y, x, y - step);
     if(itemAt(QPointF(x, y + step)))
-        addLine(x, y, x, y + step)->setData(0, "Arrow");
+        addArrow(x, y, x, y + step);
     if(itemAt(QPointF(x - step, y)))
-        addLine(x, y, x - step, y)->setData(0, "Arrow");
+        addArrow(x, y, x - step, y);
     if(itemAt(QPointF(x + step, y)))
-        addLine(x, y, x + step, y)->setData(0, "Arrow");
+        addArrow(x, y, x + step, y);
     Room *r = new Room();
     addItem(r);
     r->setPos(x, y);
+}
+
+Arrow * MapWidget::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
+{
+    Arrow *a = new Arrow(x1, y1, x2, y2);
+    addItem(a);
+    //addLine(x1, y1, x2, y2);
+    return a;
 }

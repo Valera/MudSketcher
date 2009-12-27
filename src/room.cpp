@@ -30,6 +30,7 @@ QRectF Room::boundingRect() const
 
 void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
+    Q_UNUSED(option);
     painter->setPen(Qt::lightGray);
     painter->setBrush(Qt::lightGray);
     painter->drawRect(-8, -8, 20, 20);
