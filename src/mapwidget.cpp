@@ -11,6 +11,7 @@
 MapWidget::MapWidget(QObject *parent) :
     QGraphicsScene(parent)
 {
+    setSceneRect(0, 0, 200, 200);
 }
 
 const int CELLSIZE = 20;
@@ -23,10 +24,10 @@ void MapWidget::drawBackground ( QPainter * painter, const QRectF & rect )
     pen.setCosmetic(true);
     pen.setWidth(0);
     painter->setPen(pen);
-    for(int x = 0; x < NCELLS + 1; x++){
+    for(int x = 0; x <= NCELLS; x++){
         painter->drawLine(x*CELLSIZE, 0, x*CELLSIZE, NCELLS*CELLSIZE);
     }
-    for(int y = 0; y < NCELLS + 1; y++){
+    for(int y = 0; y <= NCELLS; y++){
 
         painter->drawLine(0, y*CELLSIZE, NCELLS*CELLSIZE, y*CELLSIZE);
     }
@@ -72,7 +73,7 @@ void MapWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         addArrow(x, y, x - step, y);
     if(itemAt(QPointF(x + step, y)))
         addArrow(x, y, x + step, y);
-    Room *r = new Room();
+    Room *r = new Room(Room::Hills);
     addItem(r);
     r->setPos(x, y);
 }

@@ -14,13 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QGraphicsScene * scene = new MapWidget;
     ui->graphicsView->setScene(scene);
-    ui->graphicsView->setSceneRect(0,0, 10, 10);
-            //QRectF(QPointF(-10, -10), ui->graphicsView->size()));
     //ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
-    scene->addEllipse(QRectF(-100.0, -100.0, 100.0, 100.0));
-    scene->addItem(new Room());
-    //ui->graphicsView->s
-    //ui->graphicsView->scale(3,3);
+    scene->addItem(new Room(Room::Lava));
 }
 
 MainWindow::~MainWindow()

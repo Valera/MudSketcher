@@ -6,7 +6,9 @@
 class Room : public QGraphicsItem
 {
 public:
-    Room();
+    enum RoomType { Usual, Lava, Hills, Unknown };
+
+    Room(RoomType rt);
     ~Room();
 
     QRectF boundingRect() const;
@@ -17,6 +19,9 @@ public:
 
     enum { Type = UserType + 1 };
     int type() const { return Type; }
+
+    RoomType roomType;
+
 };
 
 #endif // ROOM_H
