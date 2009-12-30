@@ -5,12 +5,14 @@
 #include <QGraphicsScene>
 
 #include "utils.h"
+#include <QDebug>
 
 Room::Room(RoomType rt) : QGraphicsItem ()
 {
     roomType = rt;
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
+    setFlag(ItemIsSelectable);
     setCacheMode(DeviceCoordinateCache);
     setZValue(10);
 }
@@ -26,18 +28,22 @@ QRectF Room::boundingRect() const
                   20 + adjust, 20 + adjust);
                   */
     qreal adjust = 2;
-    return QRectF(-10 - adjust, -10 -adjust, 20 + 2 * adjust, 20 + 2 * adjust);
+    return QRectF(-10 - adjust, -10 -adjust, 21 + 2 * adjust, 21 + 2 * adjust);
 }
 
 void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *)
 {
     Q_UNUSED(option);
 
-    // Shadow.
-    painter->setPen(Qt::lightGray);
-    painter->setBrush(Qt::lightGray);
-    painter->drawRect(-8, -8, 20, 20);
-
+    if (isSelected()){ // If selected, draw blue background.
+        painter->setPen(Qt::lightGray);
+        painter->setBrush(Qt::darkBlue);
+        painter->drawEllipse(-16, -16, 32, 32);
+    } else { // Elase draw simple shadow.
+        painter->setPen(Qt::lightGray);
+        painter->setBrush(Qt::lightGray);
+        painter->drawRect(-8, -8, 20, 20);
+    }
     // Room itself.
     switch(roomType){
     case Usual:
