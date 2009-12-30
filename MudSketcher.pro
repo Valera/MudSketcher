@@ -9,15 +9,15 @@ SOURCES += src/main.cpp \
     src/mapwidget.cpp \
     src/utils.cpp \
     src/arrow.cpp \
-    roomproperties.cpp
+    src/roomproperties.cpp
 HEADERS += src/mainwindow.h \
     src/room.h \
     src/mapwidget.h \
     src/utils.h \
     src/arrow.h \
-    roomproperties.h
+    src/roomproperties.h
 FORMS += src/ui/mainwindow.ui \
-    roomproperties.ui
+    src/ui/roomproperties.ui
 OBJECTS_DIR = tmp/obj
 MOC_DIR = tmp/moc
 UI_DIR = tmp/UI
