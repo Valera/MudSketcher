@@ -20,9 +20,11 @@ public:
 signals:   
 
 public slots:
+    void setRoomType(int type) { m_roomType = type; };
 
 private:
     bool m_fFirstMove;
+    int m_roomType;
 
 };
 

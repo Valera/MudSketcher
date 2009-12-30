@@ -3,6 +3,8 @@
 
 #include <QGroupBox>
 
+#include "room.h"
+
 namespace Ui {
     class RoomProperties;
 }
@@ -12,6 +14,12 @@ class RoomProperties : public QGroupBox {
 public:
     RoomProperties(QWidget *parent = 0);
     ~RoomProperties();
+
+public slots:
+    void changeRoomType(QString type);
+
+signals:
+    void roomTypeChanged(int type);
 
 protected:
     void changeEvent(QEvent *e);

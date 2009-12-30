@@ -1,6 +1,8 @@
 #include "roomproperties.h"
 #include "ui_roomproperties.h"
 
+#include <QDebug>
+
 RoomProperties::RoomProperties(QWidget *parent) :
     QGroupBox(parent),
     ui(new Ui::RoomProperties)
@@ -23,4 +25,10 @@ void RoomProperties::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void RoomProperties::changeRoomType(QString type)
+{
+    if ( type == QString::fromUtf8("Лес"))
+        emit roomTypeChanged(1);
 }

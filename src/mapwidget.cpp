@@ -73,7 +73,8 @@ void MapWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         addArrow(x, y, x - step, y);
     if(itemAt(QPointF(x + step, y)))
         addArrow(x, y, x + step, y);
-    Room *r = new Room(Room::Hills);
+    qDebug() << m_roomType;
+    Room *r = new Room(Room::RoomType(m_roomType));
     addItem(r);
     r->setPos(x, y);
 }
@@ -85,3 +86,4 @@ Arrow * MapWidget::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
     //addLine(x1, y1, x2, y2);
     return a;
 }
+

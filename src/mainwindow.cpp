@@ -6,6 +6,7 @@
 
 #include "room.h"
 #include "mapwidget.h"
+#include "roomproperties.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,8 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     QGraphicsScene * scene = new MapWidget;
     ui->graphicsView->setScene(scene);
+    RoomProperties *rp = new RoomProperties(this);
+    ui->horizontalLayout->insertWidget(0, rp, 0 );
     //ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
     scene->addItem(new Room(Room::Lava));
+    connect(rp, SIGNAL(roomTypeChanged(int)), scene, SLOT(setRoomType(int)));
 }
 
 MainWindow::~MainWindow()
