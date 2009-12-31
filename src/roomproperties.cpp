@@ -3,11 +3,15 @@
 
 #include <QDebug>
 
+#include "room.h"
+
 RoomProperties::RoomProperties(QWidget *parent) :
     QGroupBox(parent),
     ui(new Ui::RoomProperties)
 {
     ui->setupUi(this);
+    for(int e = Room::Hills; e < Room::Unknown; e++)
+        ui->comboBox->addItem(Room::roomTypeName(Room::RoomType(e)), e);
 }
 
 RoomProperties::~RoomProperties()
@@ -27,8 +31,7 @@ void RoomProperties::changeEvent(QEvent *e)
     }
 }
 
-void RoomProperties::changeRoomType(QString type)
+void RoomProperties::changeRoomType(int type)
 {
-    if ( type == QString::fromUtf8("Лес"))
-        emit roomTypeChanged(1);
+    emit roomTypeChanged(Room::RoomType(type));
 }

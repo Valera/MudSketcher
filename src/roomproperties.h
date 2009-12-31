@@ -16,7 +16,7 @@ public:
     ~RoomProperties();
 
 public slots:
-    void changeRoomType(QString type);
+    void changeRoomType(int type);
 
 signals:
     void roomTypeChanged(int type);

@@ -4,6 +4,7 @@
 #include <QGraphicsScene>
 
 #include "arrow.h"
+#include "room.h"
 
 class MapWidget : public QGraphicsScene
 {
@@ -20,12 +21,11 @@ public:
 signals:   
 
 public slots:
-    void setRoomType(int type) { m_roomType = type; };
+    void setRoomType(int type);
 
 private:
     bool m_fFirstMove;
-    int m_roomType;
-
+    Room::RoomType m_roomType;
 };
 
 #endif // MAPWIDGET_H

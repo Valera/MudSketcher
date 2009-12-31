@@ -33,38 +33,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox">
-       <item>
-        <property name="text">
-         <string>Холмы</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Город</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Помещение</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Поле</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Лес</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Горы</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QComboBox" name="comboBox"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
@@ -182,9 +151,9 @@
  <connections>
   <connection>
    <sender>comboBox</sender>
-   <signal>activated(QString)</signal>
+   <signal>currentIndexChanged(int)</signal>
    <receiver>RoomProperties</receiver>
-   <slot>changeRoomType(QString)</slot>
+   <slot>changeRoomType(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>252</x>
@@ -198,6 +167,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>changeRoomType(QString)</slot>
+  <slot>changeRoomType(int)</slot>
  </slots>
 </ui>

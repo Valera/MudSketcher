@@ -8,14 +8,17 @@
 #include "room.h"
 #include "utils.h"
 
+const int CELLSIZE = 20;
+const int NCELLS = 10;
+
 MapWidget::MapWidget(QObject *parent) :
     QGraphicsScene(parent)
 {
-    setSceneRect(0, 0, 200, 200);
+    const int adjust = 40;
+    setSceneRect(-adjust, -adjust,
+                 NCELLS*CELLSIZE + 2 * adjust, NCELLS*CELLSIZE + 2 * adjust);
 }
 
-const int CELLSIZE = 20;
-const int NCELLS = 10;
 
 void MapWidget::drawBackground ( QPainter * painter, const QRectF & rect )
 {
@@ -73,7 +76,7 @@ void MapWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
         addArrow(x, y, x - step, y);
     if(itemAt(QPointF(x + step, y)))
         addArrow(x, y, x + step, y);
-    qDebug() << m_roomType;
+    qDebug() << "Creating room with type " << m_roomType;
     Room *r = new Room(Room::RoomType(m_roomType));
     addItem(r);
     r->setPos(x, y);
@@ -83,7 +86,18 @@ Arrow * MapWidget::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
 {
     Arrow *a = new Arrow(x1, y1, x2, y2);
     addItem(a);
-    //addLine(x1, y1, x2, y2);
     return a;
 }
+
+void MapWidget::setRoomType(int type)
+{
+    m_roomType = Room::RoomType(type);
+    qDebug() << "setRoomType";
+    QList<QGraphicsItem *> selected = selectedItems ();
+    if ( selected.length() == 1 &&  selected[0]->type() == Room::Type )
+    {
+        qDebug() << "bingo!";
+        (qgraphicsitem_cast <Room *> (selected[0]))->setRoomType(m_roomType);
+    }
+};
 

@@ -6,7 +6,9 @@
 class Room : public QGraphicsItem
 {
 public:
-    enum RoomType { Usual, Lava, Hills, Unknown };
+    // This enum should be iteratable , e.g. without assignments, and end with Unknown.
+    enum RoomType { Hills, City, Indoors, Field, Forest, Mountains, Lava, Unknown };
+    void setRoomType (RoomType roomType) { m_roomType = roomType; update(); };
 
     Room(RoomType rt);
     ~Room();
@@ -20,8 +22,10 @@ public:
     enum { Type = UserType + 1 };
     int type() const { return Type; }
 
-    RoomType roomType;
+    static QString roomTypeName(RoomType type);
 
+private:
+    RoomType m_roomType;
 };
 
 #endif // ROOM_H

@@ -9,7 +9,7 @@
 
 Room::Room(RoomType rt) : QGraphicsItem ()
 {
-    roomType = rt;
+    m_roomType = rt;
     setFlag(ItemIsMovable);
     setFlag(ItemSendsGeometryChanges);
     setFlag(ItemIsSelectable);
@@ -45,8 +45,8 @@ void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->drawRect(-8, -8, 20, 20);
     }
     // Room itself.
-    switch(roomType){
-    case Usual:
+    switch(m_roomType){
+    case City:
         painter->setPen(Qt::darkGreen);
         painter->setBrush(Qt::darkGray);
         painter->drawRect(-10, -10, 20, 20);
@@ -104,4 +104,35 @@ void Room::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     update();
     QGraphicsItem::mouseReleaseEvent(event);
+}
+
+QString Room::roomTypeName(RoomType type)
+{
+    // Hills, City, Indoors, Field, Forest, Mountains, Lava, Unknown
+    switch(type){
+    case Hills:
+        return QString::fromUtf8("Холмы");
+        break;
+    case City:
+        return QString::fromUtf8("Город");
+        break;
+    case Indoors:
+        return QString::fromUtf8("Помещение");
+        break;
+    case Field:
+        return QString::fromUtf8("Поле");
+        break;
+    case Forest:
+        return QString::fromUtf8("Лес");
+        break;
+    case Mountains:
+        return QString::fromUtf8("Горы");
+        break;
+    case Lava:
+        return QString::fromUtf8("Лава");
+        break;
+    default:
+        return QString("Неизвестный тип");
+        break;
+    }
 }
