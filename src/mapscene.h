@@ -1,16 +1,16 @@
-#ifndef MAPWIDGET_H
-#define MAPWIDGET_H
+#ifndef MAPSCENE_H
+#define MAPSCENE_H
 
 #include <QGraphicsScene>
 
 #include "arrow.h"
 #include "room.h"
 
-class MapWidget : public QGraphicsScene
+class MapScene : public QGraphicsScene
 {
 Q_OBJECT
 public:
-    explicit MapWidget(QObject *parent = 0);
+    explicit MapScene(QObject *parent = 0);
 
     void drawBackground ( QPainter * painter, const QRectF & rect );
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent );
@@ -28,4 +28,4 @@ private:
     Room::RoomType m_roomType;
 };
 
-#endif // MAPWIDGET_H
+#endif // MAPSCENE_H

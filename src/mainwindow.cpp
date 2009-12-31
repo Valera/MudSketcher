@@ -5,7 +5,7 @@
 #include <QPointF>
 
 #include "room.h"
-#include "mapwidget.h"
+#include "mapscene.h"
 #include "roomproperties.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QGraphicsScene * scene = new MapWidget;
+    QGraphicsScene * scene = new MapScene;
     ui->graphicsView->setScene(scene);
     RoomProperties *rp = new RoomProperties(this);
     ui->horizontalLayout->insertWidget(0, rp, 0 );

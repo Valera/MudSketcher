@@ -1,4 +1,4 @@
-#include "mapwidget.h"
+#include "mapscene.h"
 
 #include <QPainter>
 #include <QPen>
@@ -11,7 +11,7 @@
 const int CELLSIZE = 20;
 const int NCELLS = 10;
 
-MapWidget::MapWidget(QObject *parent) :
+MapScene::MapScene(QObject *parent) :
     QGraphicsScene(parent)
 {
     const int adjust = 40;
@@ -20,7 +20,7 @@ MapWidget::MapWidget(QObject *parent) :
 }
 
 
-void MapWidget::drawBackground ( QPainter * painter, const QRectF & rect )
+void MapScene::drawBackground ( QPainter * painter, const QRectF & rect )
 {
     Q_UNUSED(rect);
     QPen pen(Qt::lightGray);
@@ -36,7 +36,7 @@ void MapWidget::drawBackground ( QPainter * painter, const QRectF & rect )
     }
 }
 
-void MapWidget::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )\
+void MapScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )\
 {
     QGraphicsScene::mousePressEvent(mouseEvent);
     if(mouseGrabberItem()){
@@ -44,7 +44,7 @@ void MapWidget::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )\
     }
 }
 
-void MapWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+void MapScene::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
     if(mouseGrabberItem() && m_fFirstMove){
         QList<QGraphicsItem *> exits = collidingItems(mouseGrabberItem());
@@ -59,7 +59,7 @@ void MapWidget::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
-void MapWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+void MapScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
     const int step = 40;
     //int x = step * (int(mouseEvent->scenePos().x()) / step);
@@ -82,21 +82,19 @@ void MapWidget::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     r->setPos(x, y);
 }
 
-Arrow * MapWidget::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
+Arrow * MapScene::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
 {
     Arrow *a = new Arrow(x1, y1, x2, y2);
     addItem(a);
     return a;
 }
 
-void MapWidget::setRoomType(int type)
+void MapScene::setRoomType(int type)
 {
     m_roomType = Room::RoomType(type);
-    qDebug() << "setRoomType";
     QList<QGraphicsItem *> selected = selectedItems ();
     if ( selected.length() == 1 &&  selected[0]->type() == Room::Type )
     {
-        qDebug() << "bingo!";
         (qgraphicsitem_cast <Room *> (selected[0]))->setRoomType(m_roomType);
     }
 };

@@ -6,13 +6,13 @@ TEMPLATE = app
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/room.cpp \
-    src/mapwidget.cpp \
+    src/mapscene.cpp \
     src/utils.cpp \
     src/arrow.cpp \
     src/roomproperties.cpp
 HEADERS += src/mainwindow.h \
     src/room.h \
-    src/mapwidget.h \
+    src/mapscene.h \
     src/utils.h \
     src/arrow.h \
     src/roomproperties.h
