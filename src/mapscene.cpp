@@ -74,6 +74,8 @@ void MapScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     const int step = 40;
     int x = roundBy(mouseEvent->scenePos().x(), step);
     int y = roundBy(mouseEvent->scenePos().y(), step);
+    if (itemAt(x, y))
+        return;// Do not make new room in place where one exists.
     qDebug() << "Creating room with type " << m_roomType;
     Room *r = new Room(Room::RoomType(m_roomType));
     addItem(r);
