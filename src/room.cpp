@@ -63,7 +63,7 @@ void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         break;
     case Indoors:
         painter->setPen(QColor(0x80, 0x3F, 0x08));
-        painter->setBrush(QColor(0xF0, 0xD2, 0x5F));
+        painter->setBrush(qColorFromHex("#F0D25F"));
         painter->drawRect(-10, -10, 20, 20);
         break;
     case Field:
