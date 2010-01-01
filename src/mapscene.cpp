@@ -10,6 +10,7 @@
 
 const int CELLSIZE = 20;
 const int NCELLS = 10;
+const int ROOMSTEP = 40;
 
 MapScene::MapScene(QObject *parent) :
     QGraphicsScene(parent)
@@ -71,9 +72,8 @@ void MapScene::mouseReleaseEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 
 void MapScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
-    const int step = 40;
-    int x = roundBy(mouseEvent->scenePos().x(), step);
-    int y = roundBy(mouseEvent->scenePos().y(), step);
+    int x = roundBy(mouseEvent->scenePos().x(), ROOMSTEP);
+    int y = roundBy(mouseEvent->scenePos().y(), ROOMSTEP);
     if (itemAt(x, y))
         return;// Do not make new room in place where one exists.
     qDebug() << "Creating room with type " << m_roomType;
@@ -89,17 +89,17 @@ void MapScene::linkRoom(QGraphicsItem *room)
     int x = room->pos().x();
     int y = room->pos().y();
     QGraphicsItem *arrow = itemAt(room->pos() + QPointF(-20, 0));
-    if(!arrow && itemAt(room->pos() + QPointF(-40, 0)))
-            addArrow(x -5, y, x - 35, y);
+    if(!arrow && itemAt(room->pos() + QPointF(-ROOMSTEP, 0)))
+            addArrow(x -5, y, x - ROOMSTEP + 5, y);
     arrow = itemAt(room->pos() + QPointF(+20, 0));
-    if(!arrow && itemAt(room->pos() + QPointF(40, 0)))
-            addArrow(x +5, y, x + 35, y);
+    if(!arrow && itemAt(room->pos() + QPointF(ROOMSTEP, 0)))
+            addArrow(x +5, y, x + ROOMSTEP - 5, y);
     arrow = itemAt(room->pos() + QPointF(0, 20));
-    if(!arrow && itemAt(room->pos() + QPointF(0, 40)))
-            addArrow(x, y + 5, x, y + 35);
+    if(!arrow && itemAt(room->pos() + QPointF(0, ROOMSTEP)))
+            addArrow(x, y + 5, x, y + ROOMSTEP - 5);
     arrow = itemAt(room->pos() + QPointF(0, -20));
-    if(!arrow && itemAt(room->pos() + QPointF(0, -40)))
-            addArrow(x, y - 5, x, y - 35);
+    if(!arrow && itemAt(room->pos() + QPointF(0, -ROOMSTEP)))
+            addArrow(x, y - 5, x, y - ROOMSTEP + 5);
 }
 
 Arrow* MapScene::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
