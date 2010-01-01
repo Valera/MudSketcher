@@ -61,6 +61,28 @@ void Room::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->setBrush(Qt::darkGreen);
         painter->drawRect(-10, -10, 20, 20);
         break;
+    case Indoors:
+        painter->setPen(QColor(0x80, 0x3F, 0x08));
+        painter->setBrush(QColor(0xF0, 0xD2, 0x5F));
+        painter->drawRect(-10, -10, 20, 20);
+        break;
+    case Field:
+        painter->setPen(QColor(0x80, 0x3F, 0x08));
+        painter->setBrush(QColor(0xA9, 0xDD, 0x3E));
+        painter->drawRect(-10, -10, 20, 20);
+        break;
+    case Forest:
+        painter->setPen(QColor(0x80, 0x3F, 0x08));
+        painter->setBrush(QColor(0x49, 0x8A, 0x17));
+        painter->drawRect(-10, -10, 20, 20);
+        break;
+    case Mountains:
+        painter->setPen(Qt::lightGray);
+        painter->setBrush(Qt::darkGray);
+        painter->drawRect(-10, -10, 20, 20);
+        painter->setPen(Qt::white);
+        painter->drawText(-10, -10, 20, 20,  Qt::AlignCenter, "^");
+        break;
     case Unknown:
     default: // Unknown room type;
         painter->setPen(Qt::gray);
