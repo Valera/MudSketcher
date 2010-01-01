@@ -16,7 +16,9 @@ public:
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    void mouseReleaseEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
+    void linkRoom(QGraphicsItem *room);
     Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
 signals:   
 

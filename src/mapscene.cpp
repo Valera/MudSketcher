@@ -59,30 +59,48 @@ void MapScene::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
+void MapScene::mouseReleaseEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+{
+    QGraphicsItem *room = mouseGrabberItem();
+    if(room){
+        qDebug() << items(room->pos());
+        linkRoom(room);
+    }
+    QGraphicsScene::mouseReleaseEvent(mouseEvent);
+}
+
 void MapScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
 {
     const int step = 40;
-    //int x = step * (int(mouseEvent->scenePos().x()) / step);
     int x = roundBy(mouseEvent->scenePos().x(), step);
-    //int y = step * (int(mouseEvent->scenePos().y()) / step);
     int y = roundBy(mouseEvent->scenePos().y(), step);
-    qDebug() << mouseEvent->scenePos().x() << mouseEvent->scenePos().y();
-    qDebug() << x << y;
-    if(itemAt(QPointF(x, y - step)))
-        addArrow(x, y, x, y - step);
-    if(itemAt(QPointF(x, y + step)))
-        addArrow(x, y, x, y + step);
-    if(itemAt(QPointF(x - step, y)))
-        addArrow(x, y, x - step, y);
-    if(itemAt(QPointF(x + step, y)))
-        addArrow(x, y, x + step, y);
     qDebug() << "Creating room with type " << m_roomType;
     Room *r = new Room(Room::RoomType(m_roomType));
     addItem(r);
     r->setPos(x, y);
+    linkRoom(r);
 }
 
-Arrow * MapScene::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
+// Links room with neighbours with arrows.
+void MapScene::linkRoom(QGraphicsItem *room)
+{
+    int x = room->pos().x();
+    int y = room->pos().y();
+    QGraphicsItem *arrow = itemAt(room->pos() + QPointF(-20, 0));
+    if(!arrow && itemAt(room->pos() + QPointF(-40, 0)))
+            addArrow(x -5, y, x - 35, y);
+    arrow = itemAt(room->pos() + QPointF(+20, 0));
+    if(!arrow && itemAt(room->pos() + QPointF(40, 0)))
+            addArrow(x +5, y, x + 35, y);
+    arrow = itemAt(room->pos() + QPointF(0, 20));
+    if(!arrow && itemAt(room->pos() + QPointF(0, 40)))
+            addArrow(x, y + 5, x, y + 35);
+    arrow = itemAt(room->pos() + QPointF(0, -20));
+    if(!arrow && itemAt(room->pos() + QPointF(0, -40)))
+            addArrow(x, y - 5, x, y - 35);
+}
+
+Arrow* MapScene::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
 {
     Arrow *a = new Arrow(x1, y1, x2, y2);
     addItem(a);

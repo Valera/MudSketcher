@@ -13,6 +13,7 @@ public:
     Arrow( qreal x1, qreal y1, qreal x2, qreal y2, QGraphicsItem * parent = 0 );
     void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
     void hoverLeaveEvent ( QGraphicsSceneHoverEvent * event );
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *);
@@ -21,6 +22,7 @@ public:
     int type() const { return Type; }
 
 private:
+    bool m_active;
     QPen m_hoverPen;
     QPen m_stdPen;
     QPen m_pen;
