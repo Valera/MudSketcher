@@ -17,9 +17,15 @@ public:
 
 public slots:
     void changeRoomType(int type);
+    void changeRoomFlags();
+    void changeRoomShortDescription(QString);
+    void changeRoomLongDescription(QString);
 
 signals:
     void roomTypeChanged(int type);
+    void roomFlagsChanged(Room::Flags flags);
+    void roomShortDescriptionChanged(QString);
+    void roomLongDescriptionChanged(QString);
 
 protected:
     void changeEvent(QEvent *e);

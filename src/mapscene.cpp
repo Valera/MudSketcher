@@ -109,13 +109,41 @@ Arrow* MapScene::addArrow ( qreal x1, qreal y1, qreal x2, qreal y2)
     return a;
 }
 
-void MapScene::setRoomType(int type)
+Room* MapScene::currentRoom()
+{
+    QList<QGraphicsItem *> selected = selectedItems ();
+    if ( selected.length() == 1 &&  selected[0]->type() == Room::Type ){
+        return qgraphicsitem_cast <Room *> (selected[0]);
+    }else{
+        return 0;
+    }
+}
+
+void MapScene::setCurrentRoomType(int type)
 {
     m_roomType = Room::RoomType(type);
-    QList<QGraphicsItem *> selected = selectedItems ();
-    if ( selected.length() == 1 &&  selected[0]->type() == Room::Type )
-    {
-        (qgraphicsitem_cast <Room *> (selected[0]))->setRoomType(m_roomType);
-    }
+    Room *r = currentRoom();
+    if(r)
+        r->setRoomType(m_roomType);
 };
 
+void MapScene::setCurrentRoomFlags(Room::Flags flags)
+{
+    Room *r = currentRoom();
+    if(r)
+        r->setRoomFlags(flags);
+}
+
+void MapScene::setCurrentRoomShortDescription(QString str)
+{
+    Room *r = currentRoom();
+    if(r)
+        r->setRoomShortDescription(str);
+}
+
+void MapScene::setCurrentRoomLongDescription(QString str)
+{
+    Room *r = currentRoom();
+    if(r)
+        r->setRoomLongDescription(str);
+}

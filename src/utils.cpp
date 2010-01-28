@@ -14,7 +14,7 @@ int charToHex(char c)
 
 
 // Return QColor from string of form "#RRGGBB"
-QColor qColorFromHex(char *hexString)
+QColor qColorFromHex(const char *hexString)
 {
     Q_ASSERT(hexString);
     Q_ASSERT(strlen(hexString) == 7);

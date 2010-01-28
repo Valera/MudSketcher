@@ -7,6 +7,6 @@ inline int roundBy(double value, int roundStep)
 }
 
 class QColor;
-QColor qColorFromHex(char *hexString);
+QColor qColorFromHex(const char *hexString);
 
 #endif // UTILS_H

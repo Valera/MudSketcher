@@ -17,13 +17,18 @@ public:
     void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
     void mouseReleaseEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    void emitPropertiesChangeSignals ();
 
     void linkRoom(QGraphicsItem *room);
     Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
-signals:   
+    Room* currentRoom();
+signals:
 
 public slots:
-    void setRoomType(int type);
+    void setCurrentRoomType(int type);
+    void setCurrentRoomFlags(Room::Flags flags);
+    void setCurrentRoomShortDescription(QString);
+    void setCurrentRoomLongDescription(QString);
 
 private:
     bool m_fFirstMove;
