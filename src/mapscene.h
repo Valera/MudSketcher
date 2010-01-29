@@ -22,13 +22,16 @@ public:
     void linkRoom(QGraphicsItem *room);
     Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
     Room* currentRoom();
+
 signals:
+    void currentRoomChanged(Room *current);
 
 public slots:
     void setCurrentRoomType(int type);
     void setCurrentRoomFlags(Room::Flags flags);
     void setCurrentRoomShortDescription(QString);
     void setCurrentRoomLongDescription(QString);
+    void emitRoomChange();
 
 private:
     bool m_fFirstMove;

@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(rp, SIGNAL(roomFlagsChanged(Room::Flags)), scene, SLOT(setCurrentRoomFlags(Room::Flags)));
     connect(rp, SIGNAL(roomShortDescriptionChanged(QString)), scene, SLOT(setCurrentRoomShortDescription(QString)));
     connect(rp, SIGNAL(roomLongDescriptionChanged(QString)), scene, SLOT(setCurrentRoomLongDescription(QString)));
+    connect(scene, SIGNAL(currentRoomChanged(Room*)), rp, SLOT(populateControls(Room*)));
 }
 
 MainWindow::~MainWindow()

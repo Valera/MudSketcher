@@ -15,11 +15,18 @@ public:
     RoomProperties(QWidget *parent = 0);
     ~RoomProperties();
 
+    void setRoomType(int type);
+    void setRoomFlags(Room::Flags flags);
+    void setRoomShortDescription(QString);
+    void setRoomLongDescription(QString);
+
 public slots:
     void changeRoomType(int type);
     void changeRoomFlags();
     void changeRoomShortDescription(QString);
-    void changeRoomLongDescription(QString);
+    void changeRoomLongDescription();
+
+    void populateControls(Room *);
 
 signals:
     void roomTypeChanged(int type);

@@ -17,7 +17,8 @@ RoomProperties::RoomProperties(QWidget *parent) :
     connect(ui->checkBoxPeace, SIGNAL(stateChanged(int)), this, SLOT(changeRoomFlags()));
     connect(ui->checkBoxService, SIGNAL(stateChanged(int)), this, SLOT(changeRoomFlags()));
     connect(ui->checkBoxTunnel, SIGNAL(stateChanged(int)), this, SLOT(changeRoomFlags()));
-    connect(ui->lineEditDescription, SIGNAL(textEdited(QString)), this, SLOT(roomShortDescriptionChanged(QString)));
+    connect(ui->lineEditDescription, SIGNAL(textEdited(QString)), this, SLOT(changeRoomShortDescription(QString)));
+    connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(changeRoomLongDescription()));
 }
 
 RoomProperties::~RoomProperties()
@@ -37,21 +38,51 @@ void RoomProperties::changeEvent(QEvent *e)
     }
 }
 
+void RoomProperties::setRoomType(int type)
+{
+    ui->comboBox->setCurrentIndex(type);
+}
+
+void RoomProperties::setRoomFlags(Room::Flags flags)
+{
+    bool b;
+    b = flags.testFlag(Room::Dark);
+    ui->checkBoxDark->setChecked(b);
+    b = flags.testFlag(Room::NoMob);
+    ui->checkBoxNoMob->setChecked(b);
+    b = flags.testFlag(Room::Peacefull);
+    ui->checkBoxPeace->setChecked(b);
+    b = flags.testFlag(Room::Service);
+    ui->checkBoxService->setChecked(b);
+    b = flags.testFlag(Room::Tunnel);
+    ui->checkBoxTunnel->setChecked(b);
+}
+
+void RoomProperties::setRoomShortDescription(QString str)
+{
+    ui->lineEditDescription->setText(str);
+}
+
+void RoomProperties::setRoomLongDescription(QString str)
+{
+    ui->plainTextEdit->setPlainText(str);
+}
+
 void RoomProperties::changeRoomType(int type)
 {
     emit roomTypeChanged(Room::RoomType(type));
 }
 
+void RoomProperties::populateControls(Room *r)
+{
+    setRoomFlags(r->roomFlags());
+    setRoomType(r->roomType());
+    setRoomShortDescription(r->roomShortDescription());
+    setRoomLongDescription(r->roomLongDescription());
+}
+
 void RoomProperties::changeRoomFlags()
 {
-    /*qDebug() << "Hello world!";
-    qDebug() << ui->checkBoxDark->isChecked();
-    qDebug() << ui->checkBoxNoMob->isChecked();
-    qDebug() << ui->checkBoxPeace->isChecked();
-    qDebug() << ui->checkBoxService->isChecked();
-    qDebug() << ui->checkBoxTunnel->isChecked();
-    */
-
     Room::Flags flags;
     if (ui->checkBoxDark->isChecked()) flags |= Room::Dark;
     if (ui->checkBoxNoMob->isChecked()) flags |= Room::NoMob;
@@ -68,7 +99,8 @@ void RoomProperties::changeRoomShortDescription(QString str)
     emit roomShortDescriptionChanged(str);
 }
 
-void RoomProperties::changeRoomLongDescription(QString str)
+void RoomProperties::changeRoomLongDescription()
 {
-    emit roomLongDescriptionChanged(str);
+    //ui->plainTextEdit->toPlainText()
+    emit roomLongDescriptionChanged(ui->plainTextEdit->toPlainText());
 }

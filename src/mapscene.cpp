@@ -18,6 +18,7 @@ MapScene::MapScene(QObject *parent) :
     const int adjust = 40;
     setSceneRect(-adjust, -adjust,
                  NCELLS*CELLSIZE + 2 * adjust, NCELLS*CELLSIZE + 2 * adjust);
+    connect(this, SIGNAL(selectionChanged()), this, SLOT(emitRoomChange()));
 }
 
 
@@ -143,7 +144,15 @@ void MapScene::setCurrentRoomShortDescription(QString str)
 
 void MapScene::setCurrentRoomLongDescription(QString str)
 {
+    qDebug() << "set long descr" << str;
     Room *r = currentRoom();
     if(r)
         r->setRoomLongDescription(str);
+}
+
+void MapScene::emitRoomChange()
+{
+    Room *r = currentRoom();
+    if(r)
+        emit currentRoomChanged(r);
 }
