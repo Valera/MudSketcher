@@ -3,6 +3,7 @@
 
 #include <QRectF>
 #include <QPointF>
+#include <QFileDialog>
 
 #include "room.h"
 #include "mapscene.h"
@@ -13,6 +14,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->actionNew, SIGNAL(triggered()), this, SLOT(newFile()));
+    connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(open()));
+    connect(ui->actionSave, SIGNAL(triggered()), this, SLOT(save()));
+    connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
+
     MapScene * scene = new MapScene;
     ui->graphicsView->setScene(scene);
     RoomProperties *rp = new RoomProperties(this);
@@ -41,4 +48,21 @@ void MainWindow::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void MainWindow::newFile()
+{
+
+}
+
+void MainWindow::open()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                    QString(), tr("LispMud Zone files (*.lzon)"));
+}
+
+void MainWindow::save()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
+                                                    QString(), tr("LispMud Zone files (*.lzon)"));
 }

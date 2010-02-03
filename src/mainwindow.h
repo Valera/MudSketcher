@@ -13,6 +13,12 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void newFile();
+    void open();
+    void save();
+    //void exit();
+
 protected:
     void changeEvent(QEvent *e);
 

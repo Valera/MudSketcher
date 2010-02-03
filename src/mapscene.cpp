@@ -153,6 +153,5 @@ void MapScene::setCurrentRoomLongDescription(QString str)
 void MapScene::emitRoomChange()
 {
     Room *r = currentRoom();
-    if(r)
-        emit currentRoomChanged(r);
+    emit currentRoomChanged(r);
 }

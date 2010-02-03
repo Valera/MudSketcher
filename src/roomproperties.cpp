@@ -75,6 +75,12 @@ void RoomProperties::changeRoomType(int type)
 
 void RoomProperties::populateControls(Room *r)
 {
+    if(!r){
+        setDisabled(true);
+        return;
+    }else{
+        setDisabled(false);
+    }
     setRoomFlags(r->roomFlags());
     setRoomType(r->roomType());
     setRoomShortDescription(r->roomShortDescription());
