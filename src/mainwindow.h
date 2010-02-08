@@ -20,6 +20,7 @@ public slots:
     void newFile();
     void open();
     void save();
+    void editZoneProperties();
     //void exit();
 
 protected:
@@ -29,6 +30,7 @@ private:
     Ui::MainWindow *ui;
     MapScene * m_mapScene;
     RoomProperties *m_roomProperties;
+    QAction *m_actionZoneProperties;
 };
 
 #endif // MAINWINDOW_H

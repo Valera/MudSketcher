@@ -45,6 +45,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Now opening zone files doesn't work. :(
     ui->actionOpen->setEnabled(false);
+
+    m_actionZoneProperties
+            = new QAction(style.standardIcon(QStyle::SP_MessageBoxQuestion), QString("Edit zone"), this);
+    connect(m_actionZoneProperties, SIGNAL(triggered()), this, SLOT(editZoneProperties()));
+    ui->mainToolBar->addAction(m_actionZoneProperties);
+    m_actionZoneProperties->setEnabled(false);
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +88,7 @@ void MainWindow::newFile()
     connect(m_roomProperties, SIGNAL(roomLongDescriptionChanged(QString)), m_mapScene, SLOT(setCurrentRoomLongDescription(QString)));
     connect(m_mapScene, SIGNAL(currentRoomChanged(Room*)), m_roomProperties, SLOT(populateControls(Room*)));
     ui->actionSave->setEnabled(true);
+    m_actionZoneProperties->setEnabled(true);
 }
 
 void MainWindow::open()
@@ -106,4 +113,22 @@ void MainWindow::save()
     }
     file.write(m_mapScene->zoneText().toUtf8());
     file.close();
+}
+
+void MainWindow::editZoneProperties()
+{
+    NewZoneDialog dialog(this);
+    // Populate dialog with old data...
+    dialog.setSizeX(m_mapScene->zoneWidth());
+    dialog.setSizeY(m_mapScene->zoneHeight());
+    dialog.setName(m_mapScene->zoneName());
+    dialog.exec();
+    if(dialog.result() == QDialog::Rejected) // If user pressed Cancel, do nothing.
+        return;
+    // Get updated data to Scene...
+    m_mapScene->setZoneHeight(dialog.sizeY());
+    m_mapScene->setZoneWidth(dialog.sizeX());
+    m_mapScene->setZoneName(dialog.name());
+    // Force redraw.
+    m_mapScene->update();
 }

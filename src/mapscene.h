@@ -23,7 +23,15 @@ public:
     Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
     Room* currentRoom();
     QString zoneText();
-    QString zoneName();
+
+    QString zoneName()  { return m_zoneName; };
+    void setZoneName(QString name) { m_zoneName = name; };
+
+    int zoneHeight() { return m_zoneHeight; };
+    void setZoneHeight(int h) { m_zoneHeight = h; };
+
+    int zoneWidth() { return m_zoneWidth; };
+    void setZoneWidth(int w) { m_zoneWidth = w; };
 
 signals:
     void currentRoomChanged(Room *current);
