@@ -25,3 +25,13 @@ QColor qColorFromHex(const char *hexString)
     b = charToHex(hexString[5]) * 16 + charToHex(hexString[6]);
     return QColor(r, g, b);
 }
+
+// if original string is empty, return nil for reading as Common Lisp NIL object.
+// if not empty, add \" to begin and end, escapes some symblols.
+QString toLispString(QString original)
+{
+    if(original.isEmpty())
+        return QString("nil");
+    else
+        return QString("\"%1\"").arg(original);
+}

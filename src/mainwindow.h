@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+class MapScene;
+
 namespace Ui {
     class MainWindow;
 }
@@ -24,6 +26,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    MapScene * m_mapScene;
 };
 
 #endif // MAINWINDOW_H

@@ -33,6 +33,8 @@ public:
     void setRoomLongDescription (QString longDescription) { m_longDescription = longDescription; };
     QString roomLongDescription () {return m_longDescription; };
 
+    QString sExpr();
+
     // ---- Section for proper inheriting of QGraphicsItem and overloading its methods. ----
     Room(RoomType rt);
     ~Room();

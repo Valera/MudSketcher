@@ -158,3 +158,56 @@ QString Room::roomTypeName(RoomType type)
         break;
     }
 }
+
+QString Room::sExpr()
+{
+    int _x = roundBy(x(), 40) / 40;
+    int _y = roundBy(y(), 40) / 40;
+
+    QString roomDesc;
+    if(roomShortDescription().isEmpty())
+        roomDesc = QString("nil");
+    else
+        roomDesc = roomShortDescription();
+
+    QString type;
+    switch (roomType()){ // Hills, City, Indoors, Field, Forest, Mountains, Lava, Unknown
+    case Hills:
+        type = ":hills";
+        break;
+    case City:
+        type = ":city";
+        break;
+    case Indoors:
+        type = ":indoors";
+        break;
+    case Field:
+        type = ":field";
+        break;
+    case Forest:
+        type = ":forest";
+        break;
+    case Mountains:
+        type = ":mountains";
+        break;
+    case Lava:
+        type = ":lava";
+        break;
+    case Unknown: // Fallthrough.
+    default:
+        type = ":unknown";
+        break;
+    }
+
+    QString flagList("( ");
+    if (m_flags & Peacefull) flagList += ":peace ";
+    if (m_flags & NoMob) flagList += ":nomob ";
+    if (m_flags & Dark) flagList += ":dark ";
+    if (m_flags & Tunnel) flagList += ":tunnel ";
+    if (m_flags & Service) flagList += ":service ";
+    flagList += ")";
+
+    return QString("(:coord (%1 %2) :room-short-description %3 :room-long-description %4 :room-type %5 :room-flags %6)")
+            .arg(_x).arg(_y).arg(toLispString(roomShortDescription())).arg(toLispString(roomLongDescription()))
+            .arg(type).arg(flagList);
+}

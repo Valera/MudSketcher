@@ -155,3 +155,19 @@ void MapScene::emitRoomChange()
     Room *r = currentRoom();
     emit currentRoomChanged(r);
 }
+
+QString MapScene::zoneText()
+{
+    QString result;
+    QList<QGraphicsItem *> list;
+    list = items();
+    QGraphicsItem *i;
+    foreach(i, list){
+        Room *r;
+        if ( (r = qgraphicsitem_cast<Room *>(i)) ){
+            result += r->sExpr();
+            result += "\n";
+        }
+    }
+    return result;
+}

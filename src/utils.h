@@ -9,4 +9,7 @@ inline int roundBy(double value, int roundStep)
 class QColor;
 QColor qColorFromHex(const char *hexString);
 
+class QString;
+QString toLispString(QString original);
+
 #endif // UTILS_H

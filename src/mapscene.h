@@ -22,6 +22,7 @@ public:
     void linkRoom(QGraphicsItem *room);
     Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
     Room* currentRoom();
+    QString zoneText();
 
 signals:
     void currentRoomChanged(Room *current);
