@@ -12,12 +12,16 @@ const int CELLSIZE = 20;
 const int NCELLS = 10;
 const int ROOMSTEP = 40;
 
-MapScene::MapScene(QObject *parent) :
+MapScene::MapScene(QObject *parent, int horSize, int vertSize, QString name) :
     QGraphicsScene(parent)
 {
+    m_zoneHeight = vertSize;
+    m_zoneWidth = horSize;
+    m_zoneName = name;
+
     const int adjust = 40;
     setSceneRect(-adjust, -adjust,
-                 NCELLS*CELLSIZE + 2 * adjust, NCELLS*CELLSIZE + 2 * adjust);
+                 m_zoneWidth*2*CELLSIZE + 2 * adjust, m_zoneHeight*2*CELLSIZE + 2 * adjust);
     connect(this, SIGNAL(selectionChanged()), this, SLOT(emitRoomChange()));
 }
 
@@ -29,12 +33,11 @@ void MapScene::drawBackground ( QPainter * painter, const QRectF & rect )
     pen.setCosmetic(true);
     pen.setWidth(0);
     painter->setPen(pen);
-    for(int x = 0; x <= NCELLS; x++){
-        painter->drawLine(x*CELLSIZE, 0, x*CELLSIZE, NCELLS*CELLSIZE);
+    for(int x = 0; x <= 2 * m_zoneWidth; x++){
+        painter->drawLine(x*CELLSIZE, 0, x*CELLSIZE, 2*m_zoneHeight*CELLSIZE);
     }
-    for(int y = 0; y <= NCELLS; y++){
-
-        painter->drawLine(0, y*CELLSIZE, NCELLS*CELLSIZE, y*CELLSIZE);
+    for(int y = 0; y <= 2 * m_zoneHeight; y++){
+        painter->drawLine(0, y*CELLSIZE, 2*m_zoneWidth*CELLSIZE, y*CELLSIZE);
     }
 }
 
@@ -159,6 +162,10 @@ void MapScene::emitRoomChange()
 QString MapScene::zoneText()
 {
     QString result;
+
+    result += QString( "(:zone-name %1\n :zone-size (%2 %3) :zone-rooms\n(\n")
+              .arg(toLispString(m_zoneName)).arg(m_zoneHeight).arg(m_zoneWidth);
+
     QList<QGraphicsItem *> list;
     list = items();
     QGraphicsItem *i;
@@ -169,5 +176,9 @@ QString MapScene::zoneText()
             result += "\n";
         }
     }
+
+    result += ")\n";
+    result += ")\n";
+
     return result;
 }

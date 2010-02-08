@@ -10,7 +10,7 @@ class MapScene : public QGraphicsScene
 {
 Q_OBJECT
 public:
-    explicit MapScene(QObject *parent = 0);
+    explicit MapScene(QObject *parent = 0, int horSize = 10, int vertSize = 10, QString name = QString());
 
     void drawBackground ( QPainter * painter, const QRectF & rect );
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent );
@@ -23,6 +23,7 @@ public:
     Arrow * addArrow ( qreal x1, qreal y1, qreal x2, qreal y2);
     Room* currentRoom();
     QString zoneText();
+    QString zoneName();
 
 signals:
     void currentRoomChanged(Room *current);
@@ -37,6 +38,9 @@ public slots:
 private:
     bool m_fFirstMove;
     Room::RoomType m_roomType;
+    QString m_zoneName;
+    int m_zoneHeight;
+    int m_zoneWidth;
 };
 
 #endif // MAPSCENE_H

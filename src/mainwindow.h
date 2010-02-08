@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class MapScene;
+class RoomProperties;
 
 namespace Ui {
     class MainWindow;
@@ -27,6 +28,7 @@ protected:
 private:
     Ui::MainWindow *ui;
     MapScene * m_mapScene;
+    RoomProperties *m_roomProperties;
 };
 
 #endif // MAINWINDOW_H

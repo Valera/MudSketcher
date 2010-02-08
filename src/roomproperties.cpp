@@ -19,6 +19,7 @@ RoomProperties::RoomProperties(QWidget *parent) :
     connect(ui->checkBoxTunnel, SIGNAL(stateChanged(int)), this, SLOT(changeRoomFlags()));
     connect(ui->lineEditDescription, SIGNAL(textEdited(QString)), this, SLOT(changeRoomShortDescription(QString)));
     connect(ui->plainTextEdit, SIGNAL(textChanged()), this, SLOT(changeRoomLongDescription()));
+    setDisabled(true);
 }
 
 RoomProperties::~RoomProperties()
