@@ -10,7 +10,7 @@
 
 const int CELLSIZE = 20;
 const int NCELLS = 10;
-const int ROOMSTEP = 40;
+const int ROOMSTEP = 2 * CELLSIZE;
 
 MapScene::MapScene(QObject *parent, int horSize, int vertSize, QString name) :
     QGraphicsScene(parent)
@@ -172,12 +172,45 @@ QString MapScene::zoneText()
     foreach(i, list){
         Room *r;
         if ( (r = qgraphicsitem_cast<Room *>(i)) ){
-            result += r->sExpr();
             result += "\n";
+            result += r->sExpr();
+
+            result.remove(result.length()-1, 1);
+            Arrow *arrow;
+            Room  *room;
+            arrow = qgraphicsitem_cast <Arrow *> (itemAt(r->pos() + QPointF(-CELLSIZE, 0)));
+            room  = qgraphicsitem_cast <Room  *> (itemAt(r->pos() + QPointF(-ROOMSTEP, 0)));
+            if(room && arrow && arrow->isActive())
+            {
+                result += QString("\n\t\t:west-exit (:exit-description %1 :door nil) ")
+                          .arg(toLispString(room->roomShortDescription()));
+            }
+            arrow = qgraphicsitem_cast <Arrow *> (itemAt(r->pos() + QPointF(CELLSIZE, 0)));
+            room  = qgraphicsitem_cast <Room  *> (itemAt(r->pos() + QPointF(ROOMSTEP, 0)));
+            if(room && arrow && arrow->isActive())
+            {
+                result += QString("\n\t\t:east-exit (:exit-description %1 :door nil) ")
+                          .arg(toLispString(room->roomShortDescription()));
+            }
+            arrow = qgraphicsitem_cast <Arrow *> (itemAt(r->pos() + QPointF(0, -CELLSIZE)));
+            room  = qgraphicsitem_cast <Room  *> (itemAt(r->pos() + QPointF(0, -ROOMSTEP)));
+            if(room && arrow && arrow->isActive())
+            {
+                result += QString("\n\t\t:north-exit (:exit-description %1 :door nil) ")
+                          .arg(toLispString(room->roomShortDescription()));
+            }
+            arrow = qgraphicsitem_cast <Arrow *> (itemAt(r->pos() + QPointF(0, CELLSIZE)));
+            room  = qgraphicsitem_cast <Room  *> (itemAt(r->pos() + QPointF(0, ROOMSTEP)));
+            if(room && arrow && arrow->isActive())
+            {
+                result += QString("\n\t\t:south-exit (:exit-description %1 :door nil) ")
+                          .arg(toLispString(room->roomShortDescription()));
+            }
+            result += "\n)";
         }
     }
+    result += "\n)\n"; // Room list.
 
-    result += ")\n";
     result += ")\n";
 
     return result;

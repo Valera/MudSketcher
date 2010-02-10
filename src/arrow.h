@@ -21,6 +21,8 @@ public:
     enum { Type = UserType + 2 };
     int type() const { return Type; }
 
+    bool isActive() { return m_active; };
+
 private:
     bool m_active;
     QPen m_hoverPen;
