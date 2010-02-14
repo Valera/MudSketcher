@@ -30,8 +30,6 @@ int charToHex(char c)
     }
 }
 
-
-// Return QColor from string of form "#RRGGBB"
 QColor qColorFromHex(const char *hexString)
 {
     Q_ASSERT(hexString);
@@ -44,8 +42,6 @@ QColor qColorFromHex(const char *hexString)
     return QColor(r, g, b);
 }
 
-// if original string is empty, return nil for reading as Common Lisp NIL object.
-// if not empty, add \" to begin and end, escapes some symblols.
 QString toLispString(QString original)
 {
     if(original.isEmpty())

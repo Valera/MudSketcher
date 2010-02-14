@@ -20,14 +20,19 @@
 #define UTILS_H
 
 inline int roundBy(double value, int roundStep)
+// returns nearest integer to value integer number, divided by roundStep.
 {
-    return roundStep * (int(value + roundStep / 2.0) / roundStep);
+    int sgn = (value > 0 ? 1 : -1); // For correct rounding of negative values.
+    return roundStep * (int(value + sgn * roundStep / 2.0) / roundStep);
 }
 
 class QColor;
+// Return QColor from string of form "#RRGGBB"
 QColor qColorFromHex(const char *hexString);
 
 class QString;
+// if original string is empty, return nil for reading as Common Lisp NIL object.
+// if not empty, add \" to begin and end, escapes some symblols.
 QString toLispString(QString original);
 
 #endif // UTILS_H

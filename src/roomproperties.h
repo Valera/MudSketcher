@@ -33,20 +33,23 @@ public:
     RoomProperties(QWidget *parent = 0);
     ~RoomProperties();
 
+    // Setters for properties.
     void setRoomType(int type);
     void setRoomFlags(Room::Flags flags);
     void setRoomShortDescription(QString);
     void setRoomLongDescription(QString);
 
 public slots:
+    // Functions that emit corresponding signals.
     void changeRoomType(int type);
     void changeRoomFlags();
     void changeRoomShortDescription(QString);
     void changeRoomLongDescription();
-
+    // Function that populates all properties at once, taking them form argument.
     void populateControls(Room *);
 
 signals:
+    // Signals emited when user changes room property trough UI.
     void roomTypeChanged(int type);
     void roomFlagsChanged(Room::Flags flags);
     void roomShortDescriptionChanged(QString);

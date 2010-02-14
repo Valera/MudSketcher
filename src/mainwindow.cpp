@@ -117,6 +117,11 @@ void MainWindow::open()
 
 void MainWindow::save()
 {
+    if ( ! m_mapScene->isValid() ){
+        QMessageBox::warning(this,QString("Zone is invalid"),
+                             QString("Zone is invalid and can not be saved. Please make it coorect and try again"));
+        return;
+    }
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
                                                     QString(), tr("LispMud Zone files (*.lzon)"));
 

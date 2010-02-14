@@ -114,7 +114,6 @@ void RoomProperties::changeRoomFlags()
     if (ui->checkBoxPeace->isChecked()) flags |= Room::Peacefull;
     if (ui->checkBoxService->isChecked()) flags |= Room::Service;
     if (ui->checkBoxTunnel->isChecked()) flags |= Room::Tunnel;
-    //qDebug() << flags;
 
     emit roomFlagsChanged(flags);
 }
@@ -126,6 +125,5 @@ void RoomProperties::changeRoomShortDescription(QString str)
 
 void RoomProperties::changeRoomLongDescription()
 {
-    //ui->plainTextEdit->toPlainText()
     emit roomLongDescriptionChanged(ui->plainTextEdit->toPlainText());
 }

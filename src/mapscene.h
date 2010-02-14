@@ -51,6 +51,8 @@ public:
     int zoneWidth() { return m_zoneWidth; };
     void setZoneWidth(int w) { m_zoneWidth = w; };
 
+    bool isValid();
+
 signals:
     void currentRoomChanged(Room *current);
 

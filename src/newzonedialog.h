@@ -25,6 +25,11 @@ namespace Ui {
     class NewZoneDialog;
 }
 
+/* UI class for creation of new zone.
+   Use setSizeX, setSizeY, setName for setting default values before showing dialog.
+   Use sizeX, sizeY, name for getting new values after executiong of dialog.
+*/
+
 class NewZoneDialog : public QDialog {
     Q_OBJECT
 public:

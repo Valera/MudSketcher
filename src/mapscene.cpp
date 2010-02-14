@@ -103,6 +103,7 @@ void MapScene::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     addItem(r);
     r->setPos(x, y);
     linkRoom(r);
+    r->setSelected(true);
 }
 
 // Links room with neighbours with arrows.
@@ -232,4 +233,24 @@ QString MapScene::zoneText()
     result += ")\n";
 
     return result;
+}
+
+bool MapScene::isValid()
+// Returns true if zone can be saved to file.
+{
+    QList<QGraphicsItem *> list = items();
+    QGraphicsItem *i;
+    bool valid = true;
+    foreach(i, list){
+        Room *r;
+        if ( (r = qgraphicsitem_cast<Room *>(i)) ){
+            int _x = roundBy(r->x(), ROOMSTEP) / ROOMSTEP;
+            int _y = roundBy(r->y(), ROOMSTEP) / ROOMSTEP;
+            if ( _x < 0 || _x > m_zoneWidth || _y < 0 || _y > m_zoneHeight ){
+                valid  = false;
+                break;
+            }
+        }
+    }
+    return valid;
 }
