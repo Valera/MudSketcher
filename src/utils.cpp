@@ -45,7 +45,16 @@ QColor qColorFromHex(const char *hexString)
 QString toLispString(QString original)
 {
     if(original.isEmpty())
-        return QString("nil");
-    else
-        return QString("\"%1\"").arg(original);
+        return QString("\"\"");
+    else{
+        QString result;
+        for(int i = 0; i < original.length(); i++){
+            if( original[i] == '"'){
+                result.append("\"");
+            }else{
+                result.append(original[i]);
+            }
+        }
+        return result;
+    }
 }

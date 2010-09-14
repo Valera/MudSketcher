@@ -191,7 +191,7 @@ QString MapScene::zoneText()
     foreach(i, list){
         Room *r;
         if ( (r = qgraphicsitem_cast<Room *>(i)) ){
-            result += "\n";
+            result += "\t";
             result += r->sExpr();
 
             result.remove(result.length()-1, 1);
@@ -225,7 +225,7 @@ QString MapScene::zoneText()
                 result += QString("\n\t\t:south-exit (:exit-description %1 :door nil) ")
                           .arg(toLispString(room->roomShortDescription()));
             }
-            result += "\n)";
+            result += ")\n";
         }
     }
     result += "\n)\n"; // Room list.

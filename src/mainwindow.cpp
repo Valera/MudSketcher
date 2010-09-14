@@ -31,6 +31,7 @@
 #include "mapscene.h"
 #include "roomproperties.h"
 #include "newzonedialog.h"
+#include "reader.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -62,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->actionSave->setEnabled(false);
 
     // Now opening zone files doesn't work. :(
-    ui->actionOpen->setEnabled(false);
+    ui->actionOpen->setEnabled(true);
 
     m_actionZoneProperties
             = new QAction(style.standardIcon(QStyle::SP_MessageBoxQuestion), QString("Edit zone"), this);
@@ -111,6 +112,7 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
+    readSExpr(QString("/home/vfedotov/testing_reader/ex1"));
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     QString(), tr("LispMud Zone files (*.lzon)"));
 }

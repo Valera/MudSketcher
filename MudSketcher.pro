@@ -10,17 +10,20 @@ SOURCES += src/main.cpp \
     src/utils.cpp \
     src/arrow.cpp \
     src/roomproperties.cpp \
-    src/newzonedialog.cpp
+    src/newzonedialog.cpp \
+    src/reader.cpp
 HEADERS += src/mainwindow.h \
     src/room.h \
     src/mapscene.h \
     src/utils.h \
     src/arrow.h \
     src/roomproperties.h \
-    src/newzonedialog.h
+    src/newzonedialog.h \
+    src/reader.h
 FORMS += src/ui/mainwindow.ui \
     src/ui/roomproperties.ui \
     src/ui/newzonedialog.ui
 OBJECTS_DIR = tmp/obj
 MOC_DIR = tmp/moc
 UI_DIR = tmp/UI
+OTHER_FILES += todo.txt
