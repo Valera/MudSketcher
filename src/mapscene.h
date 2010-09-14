@@ -23,12 +23,14 @@
 
 #include "arrow.h"
 #include "room.h"
+#include "reader.h"
 
 class MapScene : public QGraphicsScene
 {
 Q_OBJECT
 public:
-    explicit MapScene(QObject *parent = 0, int horSize = 10, int vertSize = 10, QString name = QString());
+    MapScene(QObject *parent = 0, int horSize = 10, int vertSize = 10, QString name = QString());
+    MapScene(QObject *parent, SExpr *zone);
 
     void drawBackground ( QPainter * painter, const QRectF & rect );
     void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * mouseEvent );

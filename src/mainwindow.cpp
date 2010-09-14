@@ -95,9 +95,13 @@ void MainWindow::newFile()
     dialog.exec();
     if(dialog.result() == QDialog::Rejected) // If user pressed Cancel, do nothing.
         return;
-
-    // Create map scene and connect its signals to room properties panel and vise versa.
     m_mapScene = new MapScene(this, dialog.sizeX(), dialog.sizeY(), dialog.name());
+    addMapScene();
+}
+
+void MainWindow::addMapScene()
+{
+    // Create map scene and connect its signals to room properties panel and vise versa.
     ui->graphicsView->setScene(m_mapScene);
     //ui->graphicsView->setRenderHint(QPainter::Antialiasing, true);
     //m_mapScene->addItem(new Room(Room::Lava));
@@ -112,9 +116,11 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-    readSExpr(QString("/home/vfedotov/testing_reader/ex1"));
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
                                                     QString(), tr("LispMud Zone files (*.lzon)"));
+    SExpr *zone = readSExpr(fileName);
+    m_mapScene = new MapScene(this, zone->list.first());
+    addMapScene();
 }
 
 void MainWindow::save()

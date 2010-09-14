@@ -34,6 +34,8 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void addMapScene();
+
 public slots:
     void newFile();
     void open();

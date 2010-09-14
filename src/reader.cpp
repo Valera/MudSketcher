@@ -3,6 +3,7 @@
 #include <QString>
 #include <QFile>
 #include <QtGui>
+#include <QtDebug>
 
 SExpr::SExpr(SExprType t)
 {
@@ -18,7 +19,7 @@ enum ReaderState
     STATE_INTEGER,
     STATE_STRING,
     STATE_STRING_ESCAPED,
-    STATE_FLOAT,
+    STATE_SYMBOL
 };
 
 void error(QString message)
@@ -26,13 +27,32 @@ void error(QString message)
     QMessageBox::warning(NULL,QString("Internal error"), message);
 }
 
-void readSExpr(const QString &fileName)
+SExpr *getf(SExpr *list, const char *keyword)
+{
+    Q_ASSERT(list->type == LIST);
+    for(int i = 0; i < list->list.length(); i+=2){
+        Q_ASSERT(list->list[i]->type == SYMBOL);
+        if (list->list[i]->string.compare(keyword, Qt::CaseInsensitive) == 0){
+            return list->list[i+1];
+        }
+    }
+    return 0;
+}
+
+SExpr *getfOfType(SExpr *list, const char *keyword, SExprType type)
+{
+    SExpr *result = getf(list, keyword);
+    Q_ASSERT(result->type == type);
+    return result;
+}
+
+SExpr *readSExpr(const QString &fileName)
 {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){ // Standard Qt way to open files.
         QMessageBox::warning(NULL,QString("S-Expression reader error"),
                              QString("Can't open file\"%1\".\nPlease try read it again").arg(fileName));
-        return;
+        return 0;
     }
     char c;
     ReaderState state = STATE_INITIAL;
@@ -41,6 +61,7 @@ void readSExpr(const QString &fileName)
     QList <SExpr *> stack;
     SExpr *parent = result;
     QString intBuf;
+    QString symBuf;
     while(file.getChar(&c)){
         switch(state){
         case STATE_INITIAL:
@@ -69,13 +90,35 @@ void readSExpr(const QString &fileName)
                 intBuf.append(c);
                 break;
             case '"':
-                current = new SExpr(INTEGER);
+                current = new SExpr(STRING);
                 parent->list.append(current);
                 state = STATE_STRING;
-                current->string = "";
                 break;
             default:
-                error(QString("STATE_INITIAL, unexpected char %1").arg(c));
+                current = new SExpr(SYMBOL);
+                parent->list.append(current);
+                state = STATE_SYMBOL;
+                current->string.append(c);;
+                break;
+            }
+            break;
+        case STATE_SYMBOL:
+            switch(c){
+                case ')':
+                    current->string = current->string.toUpper();
+                    state = STATE_INITIAL;
+                    qDebug() << 'symb ' << current->string;
+                    parent = stack.takeLast();
+                    current = 0;
+                    break;
+                case ' ': case '\t': case '\n':
+                    current->string = current->string.toUpper();
+                    state = STATE_INITIAL;
+                    qDebug() << 'symb ' << current->string;
+                    break;
+                default:
+                    current->string.append(c);
+                    break;
             }
             break;
         case STATE_INTEGER:
@@ -88,11 +131,13 @@ void readSExpr(const QString &fileName)
                 file.ungetChar(c);
                 current->integer = intBuf.toInt();
                 current->type = INTEGER;
+                qDebug() << 'str  ' << current->string;
                 state = STATE_INITIAL;
                 break;
             case ' ': case '\t': case '\n':
                 current->integer = intBuf.toInt();
                 current->type = INTEGER;
+                qDebug() << 'int  ' << current->integer;
                 state = STATE_INITIAL;
                 break;
             default:
@@ -105,6 +150,7 @@ void readSExpr(const QString &fileName)
                 state = STATE_STRING_ESCAPED;
                 break;
             case '"':
+                qDebug() << 'str  ' << current->string;
                 state = STATE_INITIAL;
                 break;
             default:
@@ -117,12 +163,9 @@ void readSExpr(const QString &fileName)
             break;
         default:
             error("Shouldn't get here");
-
         }
     }
     file.close();
-}
 
-Reader::Reader()
-{
+    return result;
 }

@@ -9,7 +9,8 @@ enum SExprType
     LIST,
     INTEGER,
     STRING,
-    FLOAT
+    FLOAT,
+    SYMBOL
 };
 
 class SExpr
@@ -25,12 +26,8 @@ public:
     ~SExpr();
 };
 
-void readSExpr(const QString &fileName);
-
-class Reader
-{
-public:
-    Reader();
-};
+SExpr *getf(SExpr *list, const char *keyword);
+SExpr *getfOfType(SExpr *list, const char *keyword, SExprType type);
+SExpr *readSExpr(const QString &fileName);
 
 #endif // READER_H

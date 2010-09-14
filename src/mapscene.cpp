@@ -25,6 +25,7 @@
 
 #include "room.h"
 #include "utils.h"
+#include "reader.h"
 
 const int CELLSIZE = 20;
 const int NCELLS = 10;
@@ -43,6 +44,51 @@ MapScene::MapScene(QObject *parent, int horSize, int vertSize, QString name) :
     connect(this, SIGNAL(selectionChanged()), this, SLOT(emitRoomChange()));
 }
 
+MapScene::MapScene(QObject *parent, SExpr *zone) :
+        QGraphicsScene(parent)
+{
+    SExpr *val;
+    val = getfOfType(zone, ":ZONE-NAME", STRING);
+    m_zoneName = val->string;
+    val = getfOfType(zone, ":ZONE-SIZE", LIST);
+    m_zoneHeight = val->list.first()->integer;
+    m_zoneWidth = val->list[1]->integer;
+
+    const int adjust = 40;
+    setSceneRect(-adjust, -adjust,
+                 m_zoneWidth*2*CELLSIZE + 2 * adjust, m_zoneHeight*2*CELLSIZE + 2 * adjust);
+
+    val = getfOfType(zone, ":ZONE-ROOMS", LIST);
+    QList <SExpr *> roomList = val->list;
+    for(int i = 0; i < roomList.length(); i++){
+        SExpr *roomProp = roomList[i];
+        val = getfOfType(roomProp, ":coord", LIST);
+        int x0 = val->list[0]->integer;
+        int y0 = val->list[1]->integer;
+        val = getfOfType(roomProp, ":room-short-description", STRING);
+        QString shortDesc = QString::fromUtf8(val->string.toAscii().data());
+        val = getfOfType(roomProp, ":room-long-description", STRING);
+        QString longDesc = QString::fromUtf8(val->string.toAscii().data());
+        val = getfOfType(roomProp, ":room-type", SYMBOL);
+        QString rType = val->string;
+        val = getfOfType(roomProp, ":room-flags", LIST);
+
+        int x = x0 * ROOMSTEP;
+        int y = y0 * ROOMSTEP;
+        if (itemAt(x, y))
+            return;// Do not make new room in place where one exists.
+        //qDebug() << "Creating room with type " << m_roomType;
+        //Room *r = new Room(Room::RoomType(m_roomType));
+        Room *r = new Room(Room::Hills);
+        r->setRoomShortDescription(shortDesc);
+        r->setRoomLongDescription(longDesc);
+        addItem(r);
+        r->setPos(x, y);
+        linkRoom(r);
+    }
+
+    connect(this, SIGNAL(selectionChanged()), this, SLOT(emitRoomChange()));
+}
 
 void MapScene::drawBackground ( QPainter * painter, const QRectF & rect )
 {
